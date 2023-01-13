@@ -2,7 +2,6 @@ package com.sistemadegestaodeveiculos.sistemadegestaodeveiculos.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
