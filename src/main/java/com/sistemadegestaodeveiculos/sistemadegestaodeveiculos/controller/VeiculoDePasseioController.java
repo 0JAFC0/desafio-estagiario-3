@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +36,7 @@ public class VeiculoDePasseioController {
     @PostMapping
     @ApiOperation(value = "Salva um veiculo de passeio no sistema.")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Response<VeiculoDePasseio>> save(@RequestBody VeiculoDePasseio veiculoDePasseio) {
+    public ResponseEntity<Response<VeiculoDePasseio>> save(@RequestBody @Validated VeiculoDePasseio veiculoDePasseio) {
         return responseService.create(veiculoDePasseioService.save(veiculoDePasseio));
     }
 

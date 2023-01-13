@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.validation.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -31,11 +32,14 @@ public abstract class Veiculo {
 
     @ApiModelProperty(notes = "identificador do veiculo")
     @Column(unique = true)
+    @NotEmpty(message = "A placa não pode esta vazio")
     private String placa;
 
     @ApiModelProperty(notes = "modelo do veiculo")
+    @NotEmpty(message = "O nome não pode esta vazio")
     private String nome;
 
     @ApiModelProperty(notes = "marca do veiculo")
+    @NotEmpty(message = "A marca não pode esta vazio")
     private String marca;
 }

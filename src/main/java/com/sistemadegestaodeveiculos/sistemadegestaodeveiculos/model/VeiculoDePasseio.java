@@ -2,6 +2,7 @@ package com.sistemadegestaodeveiculos.sistemadegestaodeveiculos.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -22,5 +23,6 @@ public class VeiculoDePasseio extends Veiculo {
 
     @ApiModelProperty(notes = "quantidade de passageiros que o veiculo comporta")
     @Column(name = "numero_de_passageiros")
+    @NotNull(message = "O numero de passageiros não pode ser nulo")
     private Integer numeroDePassageiros;
 }
