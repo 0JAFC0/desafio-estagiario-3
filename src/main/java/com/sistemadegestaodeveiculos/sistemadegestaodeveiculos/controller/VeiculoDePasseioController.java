@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sistemadegestaodeveiculos.sistemadegestaodeveiculos.dto.VeiculoDePasseioRequest;
+import com.sistemadegestaodeveiculos.sistemadegestaodeveiculos.dto.VeiculoDePasseioResponse;
 import com.sistemadegestaodeveiculos.sistemadegestaodeveiculos.model.VeiculoDePasseio;
 import com.sistemadegestaodeveiculos.sistemadegestaodeveiculos.services.VeiculoDePasseioService;
+import com.sistemadegestaodeveiculos.sistemadegestaodeveiculos.services.utils.ModelMapperService;
 import com.sistemadegestaodeveiculos.sistemadegestaodeveiculos.services.utils.ResponseService;
 import com.sistemadegestaodeveiculos.sistemadegestaodeveiculos.shared.Response;
 
@@ -32,19 +35,22 @@ public class VeiculoDePasseioController {
     
     private final VeiculoDePasseioService veiculoDePasseioService;
     private final ResponseService responseService;
+    private final ModelMapperService modelMapperService;
     
     @PostMapping
     @ApiOperation(value = "Salva um veiculo de passeio no sistema.")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Response<VeiculoDePasseio>> save(@RequestBody @Validated VeiculoDePasseio veiculoDePasseio) {
-        return responseService.create(veiculoDePasseioService.save(veiculoDePasseio));
+    public ResponseEntity<Response<VeiculoDePasseioResponse>> save(@RequestBody @Validated VeiculoDePasseioRequest dto) {
+        VeiculoDePasseio veiculoDePasseio = modelMapperService.convert(dto, VeiculoDePasseio.class);
+        return responseService.create(modelMapperService.convert(veiculoDePasseioService.save(veiculoDePasseio), VeiculoDePasseioResponse.class));
     }
 
     @PutMapping
     @ApiOperation(value = "Valida se o veiculo com o id esta no banco, caso esteja atualiza ele com as informações.")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Response<VeiculoDePasseio>> updateById(@RequestBody VeiculoDePasseio veiculoDePasseio) {
-        return responseService.ok(veiculoDePasseioService.updateById(veiculoDePasseio));
+    public ResponseEntity<Response<VeiculoDePasseioResponse>> updateById(@RequestBody VeiculoDePasseioRequest dto) {
+        VeiculoDePasseio veiculoDePasseio = modelMapperService.convert(dto, VeiculoDePasseio.class);
+        return responseService.ok(modelMapperService.convert(veiculoDePasseioService.updateById(veiculoDePasseio), VeiculoDePasseioResponse.class));
     }
 
     @DeleteMapping(value = "/deleteByPlaca/{placa}")
@@ -66,22 +72,24 @@ public class VeiculoDePasseioController {
     @GetMapping(value = "/findByPlaca/{placa}")
     @ApiOperation(value = "Busca um veiculo de passeio pela placa no sistema.")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Response<VeiculoDePasseio>> findByPlaca(@PathVariable String placa) {
-        return responseService.ok(veiculoDePasseioService.findByPlaca(placa));
+    public ResponseEntity<Response<VeiculoDePasseioResponse>> findByPlaca(@PathVariable String placa) {
+        VeiculoDePasseio veiculoDePasseio = veiculoDePasseioService.findByPlaca(placa);
+        return responseService.ok(modelMapperService.convert(veiculoDePasseio, VeiculoDePasseioResponse.class));
     }
 
     @GetMapping(value = "/findById/{id}")
     @ApiOperation(value = "Busca um veiculo de passeio pelo Id no sistema.")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Response<VeiculoDePasseio>> findById(@PathVariable Long id) {
-        return responseService.ok(veiculoDePasseioService.findById(id));
+    public ResponseEntity<Response<VeiculoDePasseioResponse>> findById(@PathVariable Long id) {
+        VeiculoDePasseio veiculoDePasseio = veiculoDePasseioService.findById(id);
+        return responseService.ok(modelMapperService.convert(veiculoDePasseio, VeiculoDePasseioResponse.class));
     }
 
     @GetMapping
     @ApiOperation(value = "Busca todos os veiculos de passeio no sistema.")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Response<List<VeiculoDePasseio>>> findAll() {
-        return responseService.ok(veiculoDePasseioService.findAll());
+    public ResponseEntity<Response<List<VeiculoDePasseioResponse>>> findAll() {
+        return responseService.ok(modelMapperService.convertList(veiculoDePasseioService.findAll(), VeiculoDePasseioResponse.class));
     }
 
 }

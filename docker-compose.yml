@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+  # Postgresql Database for application
+  db-gestao:
+    container_name: db-gestao
+    image: "postgres:14-alpine"
+    # Volume mounted for database for the storage
+    volumes:
+      - gestao-de-veiculo-data:/var/lib/postgresql/data
+    ports:
+     - 5433:5433
+    # Environment variable for db name, db name, user and password
+    environment:
+      - POSTGRES_DB=db-gestao-veiculos
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+  # Backend Spring boot application
+  gestao-veiculos-backend:
+    container_name: gestao-veiculos-backend
+    build: ./
+    # Environment variable for 
+    environment:
+      - DB_SERVER=db-gestao
+      - POSTGRES_DB=db-gestao-veiculos
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+    ports:
+    - 8080:8080
+# Volumes for the database
+volumes:
+  gestao-de-veiculo-data:

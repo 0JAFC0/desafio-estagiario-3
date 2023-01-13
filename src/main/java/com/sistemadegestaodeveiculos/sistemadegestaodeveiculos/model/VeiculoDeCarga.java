@@ -22,11 +22,9 @@ import lombok.Setter;
 public class VeiculoDeCarga extends Veiculo {
 
     @ApiModelProperty(notes = "Quantidade de peso que o veiculo suporta")
-    @NotNull(message = "A capacidade não pode ser nulo")
     private Integer capacidade;
 
     @ApiModelProperty(notes = "Quantidade de carrocerias que o veiculo suporta")
     @Column(name = "quantidade_de_carrocerias")
-    @NotNull(message = "A quantidade de carrocerias não pode ser nulo")
     private Integer quantidadeDeCarrocerias;
 }

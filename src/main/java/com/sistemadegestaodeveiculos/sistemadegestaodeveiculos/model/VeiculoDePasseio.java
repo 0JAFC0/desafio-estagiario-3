@@ -23,6 +23,5 @@ public class VeiculoDePasseio extends Veiculo {
 
     @ApiModelProperty(notes = "quantidade de passageiros que o veiculo comporta")
     @Column(name = "numero_de_passageiros")
-    @NotNull(message = "O numero de passageiros não pode ser nulo")
     private Integer numeroDePassageiros;
 }
